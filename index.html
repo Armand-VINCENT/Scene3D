@@ -6,42 +6,65 @@
     <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
   </head>
   <body>
-    <a-scene fog="type: exponential; color: #3a6cff; density: 0.15">
-      <a-entity
-        gltf-model="assets/VineTree.glb"
-        position="0 0.5 0"
-        scale="1 1 1"
-      ></a-entity>
-      <a-entity
-        gltf-model="assets/VineTree.glb"
-        position="0.71878 0.348 0.74166"
-      ></a-entity>
+    <a-scene fog="type: exponential; color: #121345; density: 0.15">
+      <a-entity scale="2 2 2">
+        <a-entity
+          gltf-model="assets/VineTree.glb"
+          position="0 0.5 0"
+          scale="1 1 1"
+        ></a-entity>
+        <a-entity
+          gltf-model="assets/VineTree.glb"
+          position="0.71878 0.348 0.74166"
+        ></a-entity>
 
-      <a-entity
-        gltf-model="assets/Grass.glb"
-        position="0.19831 -0.03051 0.66253"
-        scale="0.1 0.1 0.23"
-      ></a-entity>
+        <a-entity
+          gltf-model="assets/VineTree.glb"
+          position="1.30447 0.348 -0.32304"
+          rotation="0 270 0"
+          scale="1.5 1.5 1.5"
+        ></a-entity>
 
-      <a-entity
-        gltf-model="assets/PlantBig.glb"
-        position="0.51806 -0.00392 -0.18666"
-        scale="0.25 0.25 0.25"
-      >
-        <a-light
-          type="point"
-          color="#687AE6"
-          intensity="1"
-          distance="5"
-          position="0 1 0"
-        ></a-light>
+        <a-entity
+          gltf-model="assets/Grass.glb"
+          position="0.19831 -0.03051 0.66253"
+          scale="0.1 0.1 0.23"
+        ></a-entity>
+
+        <a-entity
+          gltf-model="assets/Campfire.glb"
+          position="1.10642 0.06172 0.14578"
+          scale="0.1 0.1 0.23"
+        >
+          <a-light
+            type="point"
+            color="#FFA500"
+            intensity="2"
+            distance="4"
+            position="0 0.3 0"
+          ></a-light>
+        </a-entity>
+
+        <a-entity
+          gltf-model="assets/PlantBig.glb"
+          position="0.07371 -0.00392 0.67879"
+          scale="0.25 0.25 0.25"
+        >
+          <a-light
+            type="point"
+            color="#687AE6"
+            intensity="1"
+            distance="5"
+            position="0 1 0"
+          ></a-light>
+        </a-entity>
+
+        <a-entity
+          gltf-model="assets/SmallTable.glb"
+          position="0.50393 -0.01283 0.20586"
+          scale="0.25 0.25 0.25"
+        ></a-entity>
       </a-entity>
-
-      <a-entity
-        gltf-model="assets/SmallTable.glb"
-        position="0.50393 -0.01283 0.20586"
-        scale="0.25 0.25 0.25"
-      ></a-entity>
 
       <a-plane
         position="0 0 0"
