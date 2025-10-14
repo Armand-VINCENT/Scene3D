@@ -7,6 +7,7 @@
   </head>
   <body>
     <a-scene>
+      <a-entity light="type: ambient; color: #ff0000"></a-entity>
       <a-entity
         gltf-model="assets/King.glb"
         position="2.52485 0 0.46492"
@@ -30,7 +31,13 @@
         position="0 3.65044 -3.93954"
         radius="1.25"
         color="#EF2D5E"
+        emissive="#EF2D5E"
+        emissiveIntensity="2"
       ></a-sphere>
+      <a-entity
+        light="type: point; color: #EF2D5E; intensity: 5; distance: 10"
+        position="0 3.65044 -3.93954"
+      ></a-entity>
       <a-cylinder
         position="-0.03861 0.75 -3.99789"
         radius="0.5"
@@ -49,6 +56,18 @@
         position="2 1.5 -3" radius="0.5" radius-tubular="0.1" p="2" q="3"
         color="#AA00FF" ></a-torus-knot
       >
+
+      <!-- Blood Moon -->
+      <a-sphere
+        position="5 8 -10"
+        radius="2"
+        color="#b30000"
+        emissive="#ff3333"
+        emissiveIntensity="0.7"
+        segments-width="32"
+        segments-height="32"
+      ></a-sphere>
+
       <a-sky color="#be6060"></a-sky>
       <a-camera> </a-camera>
     </a-scene>
