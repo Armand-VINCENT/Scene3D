@@ -7,10 +7,27 @@
   </head>
   <body>
     <a-scene>
-      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+      <a-asset-item id="kingModel" src="assets/King.glb"></a-asset-item>
+      <a-entity
+        gltf-model="#kingModel"
+        position="1 0 -3"
+        scale="0.5 0.5 0.5"
+      ></a-entity>
+
+      <a-box
+        position="-0.0591 1.97794 -3.99435"
+        rotation="11.11 45 0"
+        color="#4CC3D9"
+        scale="0.35 0.42 0.35"
+      ></a-box>
+
+      <a-sphere
+        position="0 3.65044 -3.93954"
+        radius="1.25"
+        color="#EF2D5E"
+      ></a-sphere>
       <a-cylinder
-        position="1 0.75 -3"
+        position="-0.03861 0.75 -3.99789"
         radius="0.5"
         height="1.5"
         color="#FFC65D"
@@ -21,8 +38,13 @@
         width="4"
         height="4"
         color="#7BC8A4"
+        scale="3 3 1"
       ></a-plane>
-      <a-sky color="#ECECEC"></a-sky>
+      <a-torus-knot position="0 1.32425 -4.94125">
+        position="2 1.5 -3" radius="0.5" radius-tubular="0.1" p="2" q="3"
+        color="#AA00FF" ></a-torus-knot
+      >
+      <a-sky color="#be6060"></a-sky>
       <a-camera> </a-camera>
     </a-scene>
   </body>
