@@ -6,19 +6,18 @@
     <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
   </head>
   <body>
-    <a-scene>
+    <a-scene fog="type: exponential; color: #EF2D5E; density: 0.175">
       <a-entity light="type: ambient; color: #ff0000"></a-entity>
       <a-entity
         gltf-model="assets/King.glb"
-        position="2.52485 0 0.46492"
+        position="2.43858 1.55312 -1.83089"
         scale="0.5 0.5 0.5"
-        rotation="0 180 0"
       ></a-entity>
 
       <a-entity
         gltf-model="assets/T-Rex.glb"
         position="2.5159 0 -3"
-        scale="0.25 0.25 0.25"
+        scale="0.15 0.15 0.15"
       ></a-entity>
       <a-box
         position="-0.0591 1.97794 -3.99435"
@@ -35,7 +34,9 @@
         emissiveIntensity="2"
       ></a-sphere>
       <a-entity
-        light="type: point; color: #EF2D5E; intensity: 5; distance: 10"
+        light="type: point; color: #EF2D5E; intensity: 5; distance: 10; decay: 2"
+        emissive="#ffff"
+        emissiveIntensity="8"
         position="0 3.65044 -3.93954"
       ></a-entity>
       <a-cylinder
