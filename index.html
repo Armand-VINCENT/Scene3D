@@ -104,18 +104,9 @@
             event-set__leave="_event: mouseleave; color: yellow"
           ></a-light>
         </a-entity>
+      </a-entity>
 
-        <!-- Box with event-set components -->
-        <a-entity
-          position="10 1 0"
-          animation="property: rotation; to: 0 360 0; dur: 10000 ; loop: true; easing: linear"
-        >
-          <a-box position="0.5 0 0.5" color="#4CC3D9"></a-box>
-        </a-entity>
-
-        <!-- Camera rig with laser pointer -->
-
-        <a-camera position="0 1 5"></a-camera>
+        <a-camera position="0 1 0"></a-camera>
         <a-entity
           laser-controls="hand: left"
           raycaster="objects: .clickable; far: 20; showLine: true"
