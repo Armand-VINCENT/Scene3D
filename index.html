@@ -110,6 +110,30 @@
       <a-sky color="#121345"></a-sky>
 
       <a-camera position="0 1 5"></a-camera>
+      <script src="https://unpkg.com/aframe-super-hands-component@^4.0.0/dist/aframe-super-hands.min.js"></script>
+
+      <!-- Deux manettes (gauche/droite) avec laser et super-hands pour saisir/interagir -->
+      <a-entity
+        id="leftHand"
+        laser-controls="hand: left"
+        super-hands
+      ></a-entity>
+      <a-entity
+        id="rightHand"
+        laser-controls="hand: right"
+        super-hands
+      ></a-entity>
+
+      <script>
+        // Marquer automatiquement les modèles glTF comme "grabbable" et "hoverable"
+        // après que la scène soit chargée afin qu'ils puissent être pris avec super-hands.
+        document.querySelector("a-scene").addEventListener("loaded", () => {
+          document.querySelectorAll("[gltf-model]").forEach((el) => {
+            if (!el.hasAttribute("grabbable")) el.setAttribute("grabbable", "");
+            if (!el.hasAttribute("hoverable")) el.setAttribute("hoverable", "");
+          });
+        });
+      </script>
     </a-scene>
   </body>
 </html>
