@@ -111,6 +111,16 @@
 
       <a-camera position="0 1 5"></a-camera>
 
+      <!-- Boîte rouge qui deviendra bleue quand on appuie sur la gâchette -->
+      <a-box
+        id="toggleBox"
+        position="0 1.5 -2"
+        depth="0.2"
+        height="0.5"
+        width="0.5"
+        color="#FF0000"
+      ></a-box>
+
       <!-- Deux manettes (gauche/droite) avec laser et super-hands pour saisir/interagir -->
       <a-entity
         id="leftHand"
@@ -123,5 +133,52 @@
         super-hands
       ></a-entity>
     </a-scene>
+
+    <script>
+      /* Component that toggles the color of #toggleBox on controller trigger or click */
+      AFRAME.registerComponent("controller-toggle-box", {
+        init: function () {
+          const sceneEl = this.el.sceneEl || document.querySelector("a-scene");
+          const box = sceneEl.querySelector("#toggleBox");
+
+          if (!box) {
+            console.warn("controller-toggle-box: #toggleBox not found");
+            return;
+          }
+
+          const toggleColor = (el) => {
+            const current = (el.getAttribute("color") || "").toLowerCase();
+            const isRed = current === "#ff0000" || current === "red";
+            el.setAttribute("color", isRed ? "#0000FF" : "#FF0000");
+          };
+
+          // Controller trigger: check controller raycaster intersections
+          sceneEl.addEventListener("triggerdown", (evt) => {
+            const controller = evt.target;
+            if (
+              !controller ||
+              !controller.components ||
+              !controller.components.raycaster
+            )
+              return;
+            const intersections = controller.components.raycaster.intersections;
+            if (!intersections || !intersections.length) return;
+            const hitEl = intersections[0].object.el;
+            if (hitEl && hitEl.id === "toggleBox") {
+              toggleColor(hitEl);
+            }
+          });
+
+          // Also support clicking the box directly (desktop cursor/laser click)
+          box.addEventListener("click", () => toggleColor(box));
+        },
+      });
+
+      // Attach component to the scene once DOM ready
+      document.addEventListener("DOMContentLoaded", () => {
+        const scene = document.querySelector("a-scene");
+        if (scene) scene.setAttribute("controller-toggle-box", "");
+      });
+    </script>
   </body>
 </html>
