@@ -114,6 +114,7 @@
       <!-- Boîte rouge qui deviendra bleue quand on appuie sur la gâchette -->
       <a-box
         id="toggleBox"
+        class="clickable"
         position="0 1.5 -2"
         depth="0.2"
         height="0.5"
@@ -126,11 +127,13 @@
         id="leftHand"
         laser-controls="hand: left"
         super-hands
+        raycaster="objects: .clickable; showLine: true"
       ></a-entity>
       <a-entity
         id="rightHand"
         laser-controls="hand: right"
         super-hands
+        raycaster="objects: .clickable; showLine: true"
       ></a-entity>
     </a-scene>
 
@@ -152,20 +155,21 @@
             el.setAttribute("color", isRed ? "#0000FF" : "#FF0000");
           };
 
-          // Controller trigger: check controller raycaster intersections
+          // Controller trigger: check controller raycaster intersectedEls (more robust)
           sceneEl.addEventListener("triggerdown", (evt) => {
             const controller = evt.target;
-            if (
-              !controller ||
-              !controller.components ||
-              !controller.components.raycaster
-            )
-              return;
-            const intersections = controller.components.raycaster.intersections;
-            if (!intersections || !intersections.length) return;
-            const hitEl = intersections[0].object.el;
-            if (hitEl && hitEl.id === "toggleBox") {
-              toggleColor(hitEl);
+            if (!controller) return;
+            // Prefer intersectedEls which is kept up-to-date by raycaster component
+            const intersected =
+              (controller.components &&
+                controller.components.raycaster &&
+                controller.components.raycaster.intersectedEls) ||
+              [];
+            // Debug log
+            // console.log('triggerdown on', controller.id, 'intersectedEls:', intersected.map(e=>e.id));
+            if (intersected.length) {
+              const hitEl = intersected[0];
+              if (hitEl && hitEl.id === "toggleBox") toggleColor(hitEl);
             }
           });
 
