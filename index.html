@@ -4,6 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+
+    <!-- Event-set component -->
+    <script src="https://unpkg.com/aframe-event-set-component@5.x.x/dist/aframe-event-set-component.min.js"></script>
   </head>
   <body>
     <a-scene fog="type: exponential; color: #121345; density: 0.2">
@@ -97,6 +100,30 @@
             animation="property: light.intensity; from: 1.5; to: 0; dir: alternate; dur: 100; loop: true; easing: linear"
           ></a-light>
         </a-entity>
+
+        <a-box
+          position="0 1.5 2"
+          rotation="0 45 0"
+          color="#4CC3D9"
+          class="clickable"
+          event-set__click="_event: click; visible: false"
+          event-set__enter="_event: mouseenter; color: red"
+          event-set__leave="_event: mouseleave; color: yellow"
+        ></a-box>
+        <!-- Camera rig with laser pointer -->
+        <a-entity id="rig" position="0 0 0">
+          <a-entity camera look-controls position="0 1.6 0"></a-entity>
+          <a-entity
+            laser-controls="hand: left"
+            raycaster="objects: .clickable; far: 20; showLine: true"
+            position="-0.5 1.5 -0.5"
+          ></a-entity>
+          <a-entity
+            laser-controls="hand: right"
+            raycaster="objects: .clickable; far: 20; showLine: true"
+            position="0.5 1.5 -0.5"
+          ></a-entity>
+        </a-entity>
       </a-entity>
 
       <a-plane
@@ -108,81 +135,6 @@
       ></a-plane>
 
       <a-sky color="#121345"></a-sky>
-
-      <a-camera position="0 1 5"></a-camera>
-
-      <!-- Boîte rouge qui deviendra bleue quand on appuie sur la gâchette -->
-      <a-box
-        id="toggleBox"
-        class="clickable"
-        position="0 1.5 2"
-        depth="0.2"
-        height="0.5"
-        width="0.5"
-        color="#FF0000"
-      ></a-box>
-
-      <!-- Deux manettes (gauche/droite) avec laser et super-hands pour saisir/interagir -->
-      <a-entity
-        id="leftHand"
-        laser-controls="hand: left"
-        super-hands
-        raycaster="objects: .clickable; showLine: true"
-      ></a-entity>
-      <a-entity
-        id="rightHand"
-        laser-controls="hand: right"
-        super-hands
-        raycaster="objects: .clickable; showLine: true"
-      ></a-entity>
     </a-scene>
-
-    <script>
-      /* Component that toggles the color of #toggleBox on controller trigger or click */
-      AFRAME.registerComponent("controller-toggle-box", {
-        init: function () {
-          const sceneEl = this.el.sceneEl || document.querySelector("a-scene");
-          const box = sceneEl.querySelector("#toggleBox");
-
-          if (!box) {
-            console.warn("controller-toggle-box: #toggleBox not found");
-            return;
-          }
-
-          const toggleColor = (el) => {
-            const current = (el.getAttribute("color") || "").toLowerCase();
-            const isRed = current === "#ff0000" || current === "red";
-            el.setAttribute("color", isRed ? "#0000FF" : "#FF0000");
-          };
-
-          // Controller trigger: check controller raycaster intersectedEls (more robust)
-          sceneEl.addEventListener("triggerdown", (evt) => {
-            const controller = evt.target;
-            if (!controller) return;
-            // Prefer intersectedEls which is kept up-to-date by raycaster component
-            const intersected =
-              (controller.components &&
-                controller.components.raycaster &&
-                controller.components.raycaster.intersectedEls) ||
-              [];
-            // Debug log
-            // console.log('triggerdown on', controller.id, 'intersectedEls:', intersected.map(e=>e.id));
-            if (intersected.length) {
-              const hitEl = intersected[0];
-              if (hitEl && hitEl.id === "toggleBox") toggleColor(hitEl);
-            }
-          });
-
-          // Also support clicking the box directly (desktop cursor/laser click)
-          box.addEventListener("click", () => toggleColor(box));
-        },
-      });
-
-      // Attach component to the scene once DOM ready
-      document.addEventListener("DOMContentLoaded", () => {
-        const scene = document.querySelector("a-scene");
-        if (scene) scene.setAttribute("controller-toggle-box", "");
-      });
-    </script>
   </body>
 </html>
